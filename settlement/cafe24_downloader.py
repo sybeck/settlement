@@ -103,7 +103,6 @@ def click_excel_download_button(page):
 
 def request_excel_in_popup(page1):
     page1.locator("#aManagesList").select_option("49")
-    sleep_3(page1)
 
     def on_dialog(dialog):
         dialog.accept()
@@ -111,7 +110,6 @@ def request_excel_in_popup(page1):
     page1.on("dialog", on_dialog)
 
     page1.get_by_role("link", name="엑셀파일요청").click()
-    sleep_3(page1)
     sleep_3(page1)
 
 
@@ -230,7 +228,6 @@ def download_cafe24_excel(
         page.locator('select[name="MSK[]"]').select_option("product_code")
 
         page.locator("#sBaseSearchBox").click()
-        sleep_3(page)
         page.locator("#sBaseSearchBox").fill(product_code)
 
         click_search(page)
@@ -242,7 +239,6 @@ def download_cafe24_excel(
         sleep_3(page1)
 
         request_excel_in_popup(page1)
-        sleep_3(page1)
 
         file_path = click_first_download_button(page1, save_dir)
 

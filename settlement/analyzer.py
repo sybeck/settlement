@@ -159,7 +159,6 @@ def analyze_excel(
         - work["__refund_amount__"]
     )
 
-    # 🔹 수정된 부분: 환불금액 > 0 이면 결제 건수 제외
     if qty_col is not None:
         work["__qty__"] = work.apply(
             lambda r: 0 if r["__refund_amount__"] > 0 else int(to_number(r[qty_col])) if to_number(r[qty_col]) > 0 else 1,
@@ -184,7 +183,8 @@ def analyze_excel(
             "payment_count": int(g["__qty__"].sum()),
         })
 
-    option_rows = sorted(option_rows, key=lambda x: (-x["payment_amount"], x["option_name"]))
+    # 옵션명 기준 오름차순 정렬
+    option_rows = sorted(option_rows, key=lambda x: x["option_name"])
 
     start_dt = datetime.strptime(start_date, "%Y-%m-%d").date()
     end_dt = datetime.strptime(end_date, "%Y-%m-%d").date()
