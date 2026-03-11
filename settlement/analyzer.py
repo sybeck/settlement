@@ -90,10 +90,7 @@ def normalize_option(option_text: str) -> str:
     if not s:
         return "옵션없음"
 
-    # "수량=(xxxxxx)" 패턴 제거
     s = re.sub(r"\s*수량=\([^)]*\)", "", s).strip()
-
-    # 공백/구분자 정리
     s = re.sub(r"\s{2,}", " ", s).strip()
     s = s.rstrip(",/|").strip()
 
@@ -143,16 +140,13 @@ def analyze_excel(
 
     work = df.copy()
 
-    # 1) 결제일시(입금확인일) 비어 있으면 제외
     work = work[~work[paid_at_col].apply(is_blank)]
 
-    # 기존 상태 컬럼이 있으면 취소/환불/반품 제외
     if status_col is not None:
         work = work[~work[status_col].astype(str).apply(should_exclude_row)]
 
     work["__option__"] = work[option_col].apply(normalize_option)
 
-    # 2) 결제금액 계산식 적용
     work["__purchase_amount__"] = work[purchase_amount_col].apply(to_number)
     work["__point_amount__"] = work[point_col].apply(to_number)
     work["__coupon_amount__"] = work[coupon_col].apply(to_number)
@@ -165,10 +159,17 @@ def analyze_excel(
         - work["__refund_amount__"]
     )
 
+    # 🔹 수정된 부분: 환불금액 > 0 이면 결제 건수 제외
     if qty_col is not None:
-        work["__qty__"] = work[qty_col].apply(to_number).apply(lambda x: int(x) if x > 0 else 1)
+        work["__qty__"] = work.apply(
+            lambda r: 0 if r["__refund_amount__"] > 0 else int(to_number(r[qty_col])) if to_number(r[qty_col]) > 0 else 1,
+            axis=1
+        )
     else:
-        work["__qty__"] = 1
+        work["__qty__"] = work.apply(
+            lambda r: 0 if r["__refund_amount__"] > 0 else 1,
+            axis=1
+        )
 
     option_rows = []
     grouped = work.groupby("__option__", dropna=False)
@@ -189,7 +190,6 @@ def analyze_excel(
     end_dt = datetime.strptime(end_date, "%Y-%m-%d").date()
     elapsed_days = (end_dt - start_dt).days + 1
 
-    # 4) 정산액 = 결제금액 * 수수료율
     fee_amount = round(total_payment_amount * (fee_rate / 100.0))
     estimated_settlement_amount = fee_amount
 
