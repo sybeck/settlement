@@ -9,7 +9,7 @@ from playwright.sync_api import sync_playwright
 from .config import get_brand_credential, get_download_dir, get_headless
 
 LOGIN_URL = "https://eclogin.cafe24.com/Shop/"
-ORDER_LIST_URL_TEMPLATE = "https://{admin_id}.cafe24.com/admin/php/shop1/s_new/order_list.php"
+ORDER_LIST_URL_TEMPLATE = "https://{admin_id}.cafe24.com/admin/php/shop1/s_new/order_list.php?rows=20&searchSorting=order_desc&btnDate=9999&date_type=order_date&searchSorting=order_desc&memberType=1&shop_no_order=1&orderStatusPayment=all&orderStatusNotPayCancel=N&orderStatusCancel=N&orderSearchCancelStatus=all&orderStatusExchange=N&orderSearchExchangeStatus=all&orderStatusReturn=N&orderStatusRefund=N&orderSearchRefundStatus=all&orderSearchShipStatus=all&orderStatus[]=all&orderStatus[]=N10&orderStatus[]=N20&orderStatus[]=N22&orderStatus[]=N21&orderStatus[]=N30&orderStatus[]=N40&incoming=T&realclick=T&initSearchFlag=T&year1=2026&month1=03&day1=12&year2=2026&month2=03&day2=12&start_date=2026-03-12&end_date=2026-03-12&start_time=00:00&end_time=23:59"
 
 
 def ensure_dir(path: str) -> str:
