@@ -16,6 +16,7 @@ def build_settlement_modal(channel_id: str, user_id: str) -> dict:
         },
         "private_metadata": f"{channel_id}|{user_id}",
         "blocks": [
+
             {
                 "type": "input",
                 "block_id": "gonggu_name_block",
@@ -23,9 +24,24 @@ def build_settlement_modal(channel_id: str, user_id: str) -> dict:
                 "element": {
                     "type": "plain_text_input",
                     "action_id": "gonggu_name_action",
-                    "placeholder": {"type": "plain_text", "text": "예: 3월 2차 공구"},
+                    "placeholder": {"type": "plain_text", "text": "예: 이애람 공구 2차"},
                 },
             },
+
+            {
+                "type": "input",
+                "block_id": "product_name_block",
+                "label": {"type": "plain_text", "text": "제품명"},
+                "element": {
+                    "type": "plain_text_input",
+                    "action_id": "product_name_action",
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "예: 뉴턴젤리",
+                    },
+                },
+            },
+
             {
                 "type": "input",
                 "block_id": "brand_block",
@@ -46,6 +62,7 @@ def build_settlement_modal(channel_id: str, user_id: str) -> dict:
                     ],
                 },
             },
+
             {
                 "type": "input",
                 "block_id": "product_code_block",
@@ -56,6 +73,7 @@ def build_settlement_modal(channel_id: str, user_id: str) -> dict:
                     "placeholder": {"type": "plain_text", "text": "예: P00000CY"},
                 },
             },
+
             {
                 "type": "input",
                 "block_id": "start_date_block",
@@ -65,6 +83,7 @@ def build_settlement_modal(channel_id: str, user_id: str) -> dict:
                     "action_id": "start_date_action",
                 },
             },
+
             {
                 "type": "input",
                 "block_id": "end_date_block",
@@ -74,6 +93,7 @@ def build_settlement_modal(channel_id: str, user_id: str) -> dict:
                     "action_id": "end_date_action",
                 },
             },
+
             {
                 "type": "input",
                 "block_id": "fee_rate_block",
@@ -84,6 +104,7 @@ def build_settlement_modal(channel_id: str, user_id: str) -> dict:
                     "placeholder": {"type": "plain_text", "text": "예: 20"},
                 },
             },
+
             {
                 "type": "input",
                 "block_id": "entity_type_block",
