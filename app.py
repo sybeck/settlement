@@ -45,6 +45,7 @@ def handle_settlement_submit(ack, body, view, client, logger):
 
     state_values = view["state"]["values"]
 
+    gonggu_name = state_values["gonggu_name_block"]["gonggu_name_action"]["value"].strip()
     brand = state_values["brand_block"]["brand_action"]["selected_option"]["value"]
     product_code = state_values["product_code_block"]["product_code_action"]["value"].strip()
     start_date = state_values["start_date_block"]["start_date_action"]["selected_date"]
@@ -61,7 +62,8 @@ def handle_settlement_submit(ack, body, view, client, logger):
         parent = client.chat_postMessage(
             channel=channel_id,
             text=(
-                f":receipt: 정산 요청 접수\n"
+                f":receipt: 정산 요청 접수\n\n"
+                f"- *공구명: {gonggu_name}*\n"
                 f"- 브랜드: {brand}\n"
                 f"- 상품코드: {product_code}\n"
                 f"- 조회기간: {start_date} ~ {end_date}\n"

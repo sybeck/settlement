@@ -18,6 +18,16 @@ def build_settlement_modal(channel_id: str, user_id: str) -> dict:
         "blocks": [
             {
                 "type": "input",
+                "block_id": "gonggu_name_block",
+                "label": {"type": "plain_text", "text": "공구명"},
+                "element": {
+                    "type": "plain_text_input",
+                    "action_id": "gonggu_name_action",
+                    "placeholder": {"type": "plain_text", "text": "예: 3월 2차 공구"},
+                },
+            },
+            {
+                "type": "input",
                 "block_id": "brand_block",
                 "label": {"type": "plain_text", "text": "브랜드"},
                 "element": {
