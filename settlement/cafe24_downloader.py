@@ -101,8 +101,9 @@ def click_excel_download_button(page):
     sleep_3(page)
 
 
-def request_excel_in_popup(page1):
-    page1.locator("#aManagesList").select_option("49")
+def request_excel_in_popup(page1, admin_id: str = ""):
+    option_value = "83" if admin_id == "manyulabel" else "49"
+    page1.locator("#aManagesList").select_option(option_value)
 
     def on_dialog(dialog):
         dialog.accept()
@@ -238,7 +239,7 @@ def download_cafe24_excel(
         page1.wait_for_load_state("domcontentloaded")
         sleep_3(page1)
 
-        request_excel_in_popup(page1)
+        request_excel_in_popup(page1, admin_id=cred.admin_id)
 
         file_path = click_first_download_button(page1, save_dir)
 

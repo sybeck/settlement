@@ -94,7 +94,7 @@ def handle_settlement_submit(ack, body, view, client, logger):
             product_code=product_code,
             start_date=start_date,
             end_date=end_date,
-            fee_rate=float(fee_rate),
+            fee_rate=float(fee_rate.strip().rstrip('%')),
             entity_type=entity_type,
         )
 
